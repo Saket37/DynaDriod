@@ -21,3 +21,5 @@ val White = Color(0xFFFFFFFF) // Pure white for icons or specific highlights
 val DarkSurface = Color(0xFF2C2F33) // A slightly lighter dark gray for surfaces like input fields or cards
 val IndicatorInactive = Color(0xFF4A4E53)
 
+
+val OffWhite = Color(0xFFD9D9D9)

@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
@@ -22,18 +23,18 @@ private val DarkColorScheme = darkColorScheme(
     onSurfaceVariant = SecondaryText,
 )
 
-//private val LightColorScheme = lightColorScheme(
-//    primary = PrimaryBlue,
-//    onPrimary = White,
-//    primaryContainer = PrimaryBlueVariant,
-//    onPrimaryContainer = White,
-//    background = Color.White,
-//    onBackground = Color.Black,
-//    surface = Color.White,
-//    onSurface = Color.Black,
-//    surfaceVariant = Color.LightGray,
-//    onSurfaceVariant = Color.DarkGray,
-//)
+private val LightColorScheme = lightColorScheme(
+    primary = PrimaryBlue,
+    onPrimary = White,
+    primaryContainer = PrimaryBlueVariant,
+    onPrimaryContainer = White,
+    background = DarkBackground,
+    onBackground = OnBackgroundText,
+    surface = DarkBackground,
+    onSurface = OnBackgroundText,
+    surfaceVariant = DarkBackground,
+    onSurfaceVariant = SecondaryText,
+)
 
 @Composable
 fun DynaDroidTheme(
@@ -49,7 +50,7 @@ fun DynaDroidTheme(
         }
 
         darkTheme -> DarkColorScheme
-        else -> DarkColorScheme
+        else -> LightColorScheme
     }
 
     MaterialTheme(
