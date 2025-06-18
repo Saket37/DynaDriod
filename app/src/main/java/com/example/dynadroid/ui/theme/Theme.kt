@@ -10,31 +10,32 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = PrimaryBlue,
-    onPrimary = White,
-    primaryContainer = PrimaryBlueVariant,
-    onPrimaryContainer = White,
-    background = DarkBackground,
-    onBackground = OnBackgroundText,
-    surface = DarkBackground,
-    onSurface = OnBackgroundText,
-    surfaceVariant = DarkBackground,
-    onSurfaceVariant = SecondaryText,
-)
-
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryBlue,
     onPrimary = White,
-    primaryContainer = PrimaryBlueVariant,
-    onPrimaryContainer = White,
-    background = DarkBackground,
-    onBackground = OnBackgroundText,
-    surface = DarkBackground,
-    onSurface = OnBackgroundText,
-    surfaceVariant = DarkBackground,
-    onSurfaceVariant = SecondaryText,
+    background = LightSurface,
+    onBackground = PrimaryText,
+    surface = LightSurface,
+    onSurface = PrimaryText,
+    error = ErrorRed,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer
 )
+
+private val DarkColorScheme = darkColorScheme(
+    primary = PrimaryBlue,
+    onPrimary = White,
+    background = DarkBackground,
+    onBackground = White,
+    surface = MidGrayBackground,
+    onSurface = White,
+    error = ErrorRed,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer
+)
+
 
 @Composable
 fun DynaDroidTheme(

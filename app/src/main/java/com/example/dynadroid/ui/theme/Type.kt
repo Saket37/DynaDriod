@@ -37,29 +37,29 @@ val Typography = Typography(
 
 val SpaceGrotesk700Fs22 = TextStyle(
     fontSize = 22.sp,
-    fontFamily = FontFamily(Font(R.font.space_grotesk)),
+    fontFamily = FontFamily(Font(R.font.space_grotesk_bold)),
     fontWeight = FontWeight.Bold
 )
 
 val SpaceGrotesk700Fs32 = TextStyle(
     fontSize = 32.sp,
-    fontFamily = FontFamily(Font(R.font.space_grotesk)),
+    fontFamily = FontFamily(Font(R.font.space_grotesk_bold)),
     fontWeight = FontWeight.Bold
 )
 
 val SpaceGrotesk700Fs18 = TextStyle(
     fontSize = 18.sp,
-    fontFamily = FontFamily(Font(R.font.space_grotesk)),
-    fontWeight = FontWeight.Bold
+    fontFamily = FontFamily(Font(R.font.space_grotesk_bold)),
+    fontWeight = FontWeight(700)
 )
 
 val NotoSans400Fs18 = TextStyle(
     fontSize = 18.sp,
-    fontFamily = FontFamily(Font(R.font.noto_sans_variable)),
-    fontWeight = FontWeight.Normal
+    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+    fontWeight = FontWeight(400)
 )
 val NotoSans400Fs16 = TextStyle(
     fontSize = 16.sp,
-    fontFamily = FontFamily(Font(R.font.noto_sans_variable)),
+    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
     fontWeight = FontWeight.Normal
 )
