@@ -2,4 +2,5 @@
     <string name="app_name">DynaDroid</string>
     <string name="welcome_to_dynadriod">Welcome to DynaDroid</string>
     <string name="welcome_screen_details">Experience the magic of Dynamic Island on your Android device. DynaDroid brings seamless notifications, quick controls, and an adaptive interface right to your fingertips.</string>
+    <string name="get_started">Get Started</string>
 </resources>

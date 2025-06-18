@@ -11,15 +11,32 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 
-
-val DarkBackground = Color(0xFF1A1D20) // Deep almost-black for the main background
-val OnBackgroundText = Color(0xFFE0E0E0) // Light gray for general text on dark background
-val PrimaryBlue = Color(0xFF1976D2) // A vibrant blue for primary actions like buttons
-val PrimaryBlueVariant = Color(0xFF0D47A1) // A darker shade of blue for pressed states or accents
-val SecondaryText = Color(0xFFB0B0B0) // Slightly darker gray for secondary or hint text
-val White = Color(0xFFFFFFFF) // Pure white for icons or specific highlights
-val DarkSurface = Color(0xFF2C2F33) // A slightly lighter dark gray for surfaces like input fields or cards
+val OnBackgroundText = Color(0xFFE0E0E0)
+val PrimaryBlueVariant = Color(0xFF0D47A1)
+val DarkSurface = Color(0xFF2C2F33)
 val IndicatorInactive = Color(0xFF4A4E53)
 
 
 val OffWhite = Color(0xFFD9D9D9)
+
+
+// Brand / Theme Colors
+val PrimaryBlue = Color(0xFF0C7FF3)
+val DarkBackground = Color(0xFF141A1F)
+val MidGrayBackground = Color(0xFF232830)
+val LightGray = Color(0xFFD9D9D9)
+val LightSurface = Color(0xFFF2F2F2)
+val CardBackground = Color(0xFFE9E9E9)
+val TextColorDark = Color(0xFF1A2024)
+val ButtonColor = Color(0xFF0C7FF3)
+
+// Text Colors
+val PrimaryText = Color(0xFF1C1C1E)
+val SecondaryText = Color(0xFF555E68)
+val White = Color(0xFFFFFFFF)
+
+// Error Colors (Material Design)
+val ErrorRed = Color(0xFFB00020)
+val OnError = Color(0xFFFFFFFF)
+val ErrorContainer = Color(0xFFFCD8DF)
+val OnErrorContainer = Color(0xFF370617)
