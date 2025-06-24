@@ -1,0 +1,35 @@
+package com.example.dynadroid.data
+
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import com.example.dynadroid.data.model.AppInfo
+import com.example.dynadroid.domain.InstalledDeviceApps
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+
+class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApps {
+    override fun getInstalledApps(): Flow<List<AppInfo>> = flow {
+        // Reading the installed app using Intent, to bypass the goggle policy regarding the query all apps
+        val packageManager = context.packageManager
+        val intent = Intent(Intent.ACTION_MAIN, null).apply {
+            addCategory(Intent.CATEGORY_LAUNCHER)
+        }
+        val resolveInfos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(0))
+        } else {
+            packageManager.queryIntentActivities(intent, 0)
+        }
+
+        val apps = resolveInfos.map { resolveInfo ->
+            val appName = resolveInfo.loadLabel(packageManager).toString()
+            val appIcon = resolveInfo.loadIcon(packageManager)
+            val packageName = resolveInfo.activityInfo.packageName
+            AppInfo(appIcon = appIcon, appName = appName, packageName = packageName)
+        }.sortedBy { it.appName }
+        emit(apps)
+    }.flowOn(Dispatchers.IO)
+}

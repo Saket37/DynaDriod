@@ -3,7 +3,6 @@ package com.example.dynadroid.ui.on_boarding.select_apps
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -32,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dynadroid.R
-import com.example.dynadroid.ui.GradientBackground
+import com.example.dynadroid.system_design.GradientBackground
 import com.example.dynadroid.ui.theme.CardBackground
 import com.example.dynadroid.ui.theme.NotoSans400Fs16
 import com.example.dynadroid.ui.theme.NotoSans400Fs18

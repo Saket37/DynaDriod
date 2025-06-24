@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.example.dynadroid.R
-import com.example.dynadroid.ui.GradientBackground
+import com.example.dynadroid.system_design.GradientBackground
 import com.example.dynadroid.ui.theme.CardBackground
 import com.example.dynadroid.ui.theme.DynaDroidTheme
 import com.example.dynadroid.ui.theme.NotoSans400Fs18

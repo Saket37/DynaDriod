@@ -1,4 +1,4 @@
-package com.example.dynadroid.ui
+package com.example.dynadroid.system_design
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
