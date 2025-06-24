@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.example.dynadroid.R
 import com.example.dynadroid.ui.GradientBackground
@@ -45,7 +46,9 @@ import com.example.dynadroid.utils.dpToPx
 
 
 @Composable
-fun Welcome() {
+fun Welcome(
+    onNextClick: () -> Unit
+) {
     val context = LocalContext.current
     GradientBackground(
         modifier = Modifier.drawBehind {
@@ -138,7 +141,8 @@ fun Welcome() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(modifier = Modifier.padding(top = 10.dp),
+                Text(
+                    modifier = Modifier.padding(top = 10.dp),
                     text = stringResource(id = R.string.welcome_to_dynadriod),
                     style = SpaceGrotesk700Fs32,
                     color = TextColorDark
@@ -153,7 +157,9 @@ fun Welcome() {
                 )
                 VerticalGap(36.dp)
                 Button(
-                    onClick = {},
+                    onClick = {
+                        onNextClick()
+                    },
                     modifier = Modifier
                         .padding(horizontal = 30.dp)
                         .fillMaxWidth(),
@@ -183,10 +189,47 @@ fun Welcome() {
     }
 }
 
+//@Composable
+//fun WelcomeAdaptive() {
+//    GradientBackground {
+//        BoxWithConstraints {
+//            val screenHeight = this.maxHeight
+//            val screenWidth = this.maxWidth
+//            val configuration = LocalConfiguration.current
+//
+//            Box(
+//                Modifier
+//                    .offset(x = -(screenWidth * 0.35f), y = -(screenHeight * 0.49f))
+//                    .size(width = screenWidth * 0.45f, height = screenHeight * 0.05f)
+//                    .clip(RoundedCornerShape(35.dp))
+//                    .background(OffWhite),
+//            )
+//
+//            Box(
+//                Modifier
+//                    .offset(x = (screenWidth * 0.40f), y = -(screenHeight * 0.35f))
+//                    .size(width = screenWidth * 0.45f, height = screenHeight * 0.05f)
+//                    .clip(RoundedCornerShape(35.dp))
+//                    .background(OffWhite),
+//            )
+//
+//            Box(
+//                Modifier
+//                    .offset(x = -(screenWidth * 0.35f), y = -(screenHeight * 0.49f))
+//                    .size(width = screenWidth * 0.45f, height = screenHeight * 0.05f)
+//                    .clip(RoundedCornerShape(35.dp))
+//                    .background(OffWhite),
+//            )
+//
+//        }
+//    }
+//}
+
+@PreviewScreenSizes
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun WelcomePreview() {
     DynaDroidTheme {
-        Welcome()
+        Welcome(){}
     }
 }
