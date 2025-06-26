@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,13 +23,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -69,6 +67,8 @@ fun AppSelectionScreen(
     listState: LazyListState,
     onSelectAppClick: () -> Unit
 ) {
+    val cardShape = RoundedCornerShape(topStart = 80.dp, topEnd = 80.dp, bottomStart = 80.dp)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,10 +87,9 @@ fun AppSelectionScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(
-                    CardBackground,
-                    RoundedCornerShape(topStart = 80.dp, topEnd = 80.dp, bottomStart = 80.dp)
-                )
+                .clip(cardShape)
+                .background(CardBackground)
+
         ) {
             Column(modifier = Modifier.padding(vertical = 20.dp)) {
                 Text(
@@ -110,11 +109,12 @@ fun AppSelectionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp)
-                        //.weight(1f)
+                    //.weight(1f)
                 ) {
-                    Row(modifier = Modifier
-                        .clickable {onSelectAppClick()}
-                        .padding(horizontal = 8.dp),
+                    Row(
+                        modifier = Modifier
+                            .clickable { onSelectAppClick() }
+                            .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
@@ -179,14 +179,16 @@ fun AppSelectionScreen(
 @Composable
 fun AppsItem(modifier: Modifier = Modifier, appIcon: Drawable, appName: String) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AsyncImage(
-            model = appIcon, modifier = Modifier.size(24.dp), contentDescription = null
+            model = appIcon, modifier = Modifier.size(32.dp), contentDescription = null
         )
-        Text(text = appName, style = NotoSans400Fs16, color = TextColorDark)
+        Text(text = appName, style = SpaceGrotesk700Fs18, color = TextColorDark)
     }
 
 }
