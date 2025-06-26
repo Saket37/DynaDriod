@@ -7,7 +7,5 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    single { androidContext() }
-
     single<InstalledDeviceApps> { InstalledDeviceAppsImpl(get()) }
 }

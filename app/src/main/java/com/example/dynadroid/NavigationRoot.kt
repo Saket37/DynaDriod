@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.dynadroid.ui.on_boarding.Welcome
-import com.example.dynadroid.ui.on_boarding.select_apps.AppSelectionScreen
+import com.example.dynadroid.ui.on_boarding.select_apps.AppSelectionScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -26,7 +26,7 @@ private fun NavGraphBuilder.appNav(
             Welcome(
                 onNextClick = {
                     navController.navigate("appSelectionOnboarding") {
-                        popUpTo("welcome"){
+                        popUpTo("welcome") {
                             inclusive = true
                         }
                     }
@@ -34,7 +34,7 @@ private fun NavGraphBuilder.appNav(
             )
         }
         composable(route = "appSelectionOnboarding") {
-            AppSelectionScreen()
+            AppSelectionScreenRoot()
         }
     }
 }

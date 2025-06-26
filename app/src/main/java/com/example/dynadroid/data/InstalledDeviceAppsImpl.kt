@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import com.example.dynadroid.data.model.AppInfo
 import com.example.dynadroid.domain.InstalledDeviceApps
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +12,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
+private const val TAG = "InstalledDeviceApps"
+
 class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApps {
     override fun getInstalledApps(): Flow<List<AppInfo>> = flow {
+        Log.d(TAG, "Starting to read installed apps...")
+
         // Reading the installed app using Intent, to bypass the goggle policy regarding the query all apps
         val packageManager = context.packageManager
         val intent = Intent(Intent.ACTION_MAIN, null).apply {
@@ -30,6 +35,8 @@ class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApp
             val packageName = resolveInfo.activityInfo.packageName
             AppInfo(appIcon = appIcon, appName = appName, packageName = packageName)
         }.sortedBy { it.appName }
+        Log.d(TAG, "Successfully read ${apps} apps.")
+
         emit(apps)
     }.flowOn(Dispatchers.IO)
 }

@@ -1,11 +1,12 @@
 package com.example.dynadroid.ui.installed_apps_list
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dynadroid.data.model.AppInfo
 import com.example.dynadroid.domain.InstalledDeviceApps
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -18,26 +19,22 @@ data class AppListState(
 
 class InstalledAppsListViewModel(private val deviceApps: InstalledDeviceApps) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AppListState())
-    val uiState: StateFlow<AppListState> = _uiState
+    var uiState by mutableStateOf(AppListState())
+        private set
 
-    init {
-        loadApps()
-    }
-
-    private fun loadApps() {
+     fun loadApps() {
         viewModelScope.launch {
             deviceApps.getInstalledApps()
-                .onStart { _uiState.value = AppListState(isLoading = true) }
+                .onStart { uiState = uiState.copy(isLoading = true) }
                 .catch { e ->
-                    _uiState.value = AppListState(
+                    uiState = uiState.copy(
                         isLoading = false,
                         apps = emptyList(),
                         errorMessage = e.localizedMessage ?: "Unknown Error"
                     )
                 }
                 .collect { apps ->
-                    _uiState.value = AppListState(isLoading = false, apps = apps)
+                    uiState = uiState.copy(isLoading = false, apps = apps)
                 }
         }
     }
