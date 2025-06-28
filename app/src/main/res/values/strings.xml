@@ -8,4 +8,5 @@
     <string name="next">Next</string>
     <string name="apps_dynamic_island">Apps for Dynamic Island</string>
     <string name="tap_to_choose_destination">Tap to choose applications</string>
+    <string name="skip">Skip</string>
 </resources>
