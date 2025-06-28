@@ -19,5 +19,5 @@ interface InstalledAppsDao {
     suspend fun deleteAppsByPackageName(packageName: List<String>)
 
     @Query("UPDATE installed_apps SET isChecked = :isChecked WHERE appId = :appId")
-    suspend fun updateCheckedState(appId: String, isChecked: Boolean)
+    suspend fun updateCheckedState(appId: Long, isChecked: Boolean)
 }

@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.dynadroid.data.local.dao.InstalledAppsDao
 import com.example.dynadroid.data.local.entity.SelectedAppInfo
 
-@Database(entities = [SelectedAppInfo::class], version = 1)
+@Database(entities = [SelectedAppInfo::class], version = 1, exportSchema = true)
 @TypeConverters(BitmapConvertor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val installedAppsDao: InstalledAppsDao
