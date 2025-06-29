@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flowOn
 private const val TAG = "InstalledDeviceApps"
 
 class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApps {
-    override fun getInstalledApps(): Flow<AppLoadResult> = flow {
+    override fun getInstalledApps(): Flow<List<AppInfo>> = flow {
         Log.d(TAG, "Starting to read installed apps...")
 
         // Reading the installed app using Intent, to bypass the goggle policy regarding the query all apps
@@ -36,7 +36,7 @@ class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApp
             val packageName = resolveInfo.activityInfo.packageName
 
             val progressPercentage = ((index + 1).toFloat() / totalApps)
-            emit(AppLoadResult.Progress(progressPercentage))
+            //emit(AppLoadResult.Progress(progressPercentage))
 
             AppInfo(
                 appIcon = appIcon,
@@ -47,7 +47,7 @@ class InstalledDeviceAppsImpl(private val context: Context) : InstalledDeviceApp
         }.sortedBy { it.appName }
         Log.d(TAG, "Successfully read ${apps} apps.")
 
-        emit(AppLoadResult.Success(apps))
+        emit(apps)
     }.flowOn(Dispatchers.IO)
 }
 

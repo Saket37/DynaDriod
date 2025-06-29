@@ -2,6 +2,7 @@ package com.example.dynadroid.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import com.example.dynadroid.data.local.entity.SelectedAppInfo
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,12 @@ interface InstalledAppsDao {
     @Query("DELETE FROM installed_apps WHERE packageName IN (:packageName)")
     suspend fun deleteAppsByPackageName(packageName: List<String>)
 
-    @Query("UPDATE installed_apps SET isChecked = :isChecked WHERE appId = :appId")
-    suspend fun updateCheckedState(appId: Long, isChecked: Boolean)
+    @Query("UPDATE installed_apps SET isChecked = :isChecked WHERE packageName = :packageName")
+    suspend fun updateCheckedState(packageName: String, isChecked: Boolean)
+
+    @Transaction
+    suspend fun syncApps(installApps: List<SelectedAppInfo>, uninstallApps: List<String>) {
+        deleteAppsByPackageName(uninstallApps)
+        upsertApps(installApps)
+    }
 }

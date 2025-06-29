@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "installed_apps")
 data class SelectedAppInfo(
-    @PrimaryKey(autoGenerate = true)
-    val appId: Long,
+//    @PrimaryKey(autoGenerate = true)
+//    val appId: Long,
     val appName: String,
+    @PrimaryKey
     val packageName: String,
     val appIcon: Bitmap,
     val isChecked: Boolean = false

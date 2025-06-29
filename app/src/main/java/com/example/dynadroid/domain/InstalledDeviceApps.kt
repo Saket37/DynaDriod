@@ -5,5 +5,5 @@ import com.example.dynadroid.data.model.AppInfo
 import kotlinx.coroutines.flow.Flow
 
 interface InstalledDeviceApps {
-    fun getInstalledApps(): Flow<AppLoadResult>
+    fun getInstalledApps(): Flow<List<AppInfo>>
 }
