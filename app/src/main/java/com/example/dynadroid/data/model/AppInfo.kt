@@ -1,10 +1,10 @@
 package com.example.dynadroid.data.model
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 
 data class AppInfo(
     val appName: String,
-    val appIcon: Drawable,
+    val appIcon: Bitmap,
     val packageName: String,
-    val appId: Int
 )

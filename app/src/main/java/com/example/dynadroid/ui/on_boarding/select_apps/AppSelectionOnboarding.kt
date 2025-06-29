@@ -2,6 +2,7 @@
 
 package com.example.dynadroid.ui.on_boarding.select_apps
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -236,7 +237,7 @@ fun AppSelectionScreen(
 
                 if (uiState.isLoading == false && uiState.apps.isEmpty().not()) {
                     itemsIndexed(uiState.apps, key = { index, app ->
-                        app.appId
+                        app.packageName
                     }) { index, app ->
                         androidx.compose.animation.AnimatedVisibility(
                             true,
@@ -260,7 +261,7 @@ fun AppSelectionScreen(
 }
 
 @Composable
-fun AppsItem(modifier: Modifier = Modifier, appIcon: Drawable, appName: String) {
+fun AppsItem(modifier: Modifier = Modifier, appIcon: Bitmap, appName: String) {
     var check by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
