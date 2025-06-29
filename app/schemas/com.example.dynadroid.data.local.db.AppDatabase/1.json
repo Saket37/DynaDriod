@@ -1,0 +1,55 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1d94d350e436b59cc40c4e1d5804637d",
+    "entities": [
+      {
+        "tableName": "installed_apps",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`appId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `appName` TEXT NOT NULL, `packageName` TEXT NOT NULL, `appIcon` BLOB NOT NULL, `isChecked` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "appId",
+            "columnName": "appId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "appName",
+            "columnName": "appName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "packageName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "appIcon",
+            "columnName": "appIcon",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChecked",
+            "columnName": "isChecked",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "appId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d94d350e436b59cc40c4e1d5804637d')"
+    ]
+  }
+}
