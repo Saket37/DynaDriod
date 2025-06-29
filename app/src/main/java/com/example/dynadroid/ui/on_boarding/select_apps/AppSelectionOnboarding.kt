@@ -3,7 +3,6 @@
 package com.example.dynadroid.ui.on_boarding.select_apps
 
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -59,15 +58,11 @@ import com.example.dynadroid.R
 import com.example.dynadroid.system_design.GradientBackground
 import com.example.dynadroid.system_design.cardShape
 import com.example.dynadroid.ui.theme.CardBackground
-import com.example.dynadroid.ui.theme.DarkBackground
-import com.example.dynadroid.ui.theme.IndicatorInactive
 import com.example.dynadroid.ui.theme.MidGrayBackground
 import com.example.dynadroid.ui.theme.NotoSans400Fs16
 import com.example.dynadroid.ui.theme.NotoSans400Fs18
 import com.example.dynadroid.ui.theme.PrimaryBlue
 import com.example.dynadroid.ui.theme.PrimaryBlueVariant
-import com.example.dynadroid.ui.theme.PurpleGrey80
-import com.example.dynadroid.ui.theme.SecondaryText
 import com.example.dynadroid.ui.theme.SpaceGrotesk700Fs18
 import com.example.dynadroid.ui.theme.SpaceGrotesk700Fs22
 import com.example.dynadroid.ui.theme.TextColorDark
@@ -77,12 +72,18 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppSelectionScreenRoot(
-    modifier: Modifier = Modifier, viewModel: InstalledAppsListViewModel = koinViewModel()
+    modifier: Modifier = Modifier, viewModel: InstalledAppsListViewModel = koinViewModel(),
+    onNextClick: () -> Unit,
+    onSkipClick: () -> Unit
 ) {
     // TODO add jump to top
     val listState = rememberLazyListState()
     GradientBackground(contentAlignment = Alignment.TopStart) {
-        AppSelectionScreen(uiState = viewModel.uiState, listState = listState) {
+        AppSelectionScreen(
+            uiState = viewModel.uiState,
+            listState = listState,
+            onSkipClick = { onSkipClick() },
+            onNextClick = { onNextClick() }) {
             viewModel.searchApp()
         }
     }
@@ -93,6 +94,8 @@ fun AppSelectionScreen(
     modifier: Modifier = Modifier,
     uiState: AppListState,
     listState: LazyListState,
+    onSkipClick: () -> Unit,
+    onNextClick: () -> Unit,
     onSelectAppClick: () -> Unit
 ) {
     val animatedProgress by
@@ -113,12 +116,15 @@ fun AppSelectionScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .clickable { onSkipClick() }
+                    .weight(1f),
                 text = stringResource(R.string.skip),
                 style = NotoSans400Fs16,
                 color = Color.White
             )
             Text(
+                modifier = Modifier.clickable { onNextClick() },
                 text = stringResource(R.string.next),
                 style = NotoSans400Fs16,
                 color = Color.White

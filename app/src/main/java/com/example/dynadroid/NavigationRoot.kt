@@ -34,7 +34,7 @@ private fun NavGraphBuilder.appNav(
             )
         }
         composable(route = "appSelectionOnboarding") {
-            AppSelectionScreenRoot()
+            AppSelectionScreenRoot(onNextClick = {}, onSkipClick = {})
         }
     }
 }
