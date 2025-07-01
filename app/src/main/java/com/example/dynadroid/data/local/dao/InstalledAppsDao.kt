@@ -3,6 +3,7 @@ package com.example.dynadroid.data.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import androidx.room.Upsert
 import com.example.dynadroid.data.local.entity.SelectedAppInfo
 import kotlinx.coroutines.flow.Flow
@@ -27,4 +28,7 @@ interface InstalledAppsDao {
         deleteAppsByPackageName(uninstallApps)
         upsertApps(installApps)
     }
+
+    @Update
+    suspend fun updateApps(apps: List<SelectedAppInfo>)
 }

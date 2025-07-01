@@ -5,7 +5,7 @@ import com.example.dynadroid.utils.AppLoadResult
 import kotlinx.coroutines.flow.Flow
 
 interface InstalledAppsRepository {
-    suspend fun updateCheckedState(packageName: String, isChecked: Boolean)
+    suspend fun updateApps(packages: List<SelectedAppInfo>)
 
     suspend fun getSyncedApps(): Flow<AppLoadResult<List<SelectedAppInfo>>>
 }

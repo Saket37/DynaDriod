@@ -7,6 +7,16 @@ fun SelectedAppInfo.toAppInfo(): AppInfo {
     return AppInfo(
         appName = appName,
         appIcon = appIcon,
-        packageName = packageName
+        packageName = packageName,
+        isChecked = isChecked
+    )
+}
+
+fun AppInfo.toSelectedAppInfo(): SelectedAppInfo {
+    return SelectedAppInfo(
+        appIcon = appIcon!!,
+        appName = appName,
+        packageName = packageName,
+        isChecked = isChecked
     )
 }

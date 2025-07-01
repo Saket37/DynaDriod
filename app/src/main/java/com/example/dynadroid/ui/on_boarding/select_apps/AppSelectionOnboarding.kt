@@ -42,9 +42,6 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +50,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.dynadroid.R
 import com.example.dynadroid.system_design.GradientBackground
@@ -77,13 +75,21 @@ fun AppSelectionScreenRoot(
     onSkipClick: () -> Unit
 ) {
     // TODO add jump to top
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val listState = rememberLazyListState()
     GradientBackground(contentAlignment = Alignment.TopStart) {
         AppSelectionScreen(
-            uiState = viewModel.uiState,
+            uiState = uiState,
             listState = listState,
             onSkipClick = { onSkipClick() },
-            onNextClick = { onNextClick() }) {
+            onNextClick = {
+                viewModel.saveChangesToDb()
+                onNextClick()
+            },
+            onCheckChanged = { packageName, checkedValue ->
+                viewModel.updateAppsState(packageName, checkedValue)
+            }) {
             viewModel.searchApp()
         }
     }
@@ -96,6 +102,7 @@ fun AppSelectionScreen(
     listState: LazyListState,
     onSkipClick: () -> Unit,
     onNextClick: () -> Unit,
+    onCheckChanged: (String, Boolean) -> Unit,
     onSelectAppClick: () -> Unit
 ) {
     val animatedProgress by
@@ -146,11 +153,10 @@ fun AppSelectionScreen(
                 contentPadding = PaddingValues(vertical = 16.dp)
             ) {
                 stickyHeader {
-                    // 💡 FIX 1: Add a background to the header's container
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(CardBackground) // Use the same background color
+                            .background(CardBackground)
                     ) {
                         Text(
                             modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -219,7 +225,8 @@ fun AppSelectionScreen(
                 item {
                     androidx.compose.animation.AnimatedVisibility(
                         uiState.isLoading,
-                        enter = slideInVertically() + fadeIn()
+                        enter = slideInVertically() + fadeIn(),
+                        exit = slideOutVertically() + fadeOut()
                     ) {
                         Box(
                             modifier = Modifier
@@ -254,7 +261,12 @@ fun AppSelectionScreen(
                                 animationSpec = tween(durationMillis = 400)
                             )) {
                             AppsItem(
-                                appIcon = app.appIcon, appName = app.appName
+                                appIcon = app.appIcon,
+                                appName = app.appName,
+                                checkValue = app.isChecked,
+                                onCheckChanged = {
+                                    onCheckChanged(app.packageName, it)
+                                }
                             )
                         }
                     }
@@ -267,8 +279,13 @@ fun AppSelectionScreen(
 }
 
 @Composable
-fun AppsItem(modifier: Modifier = Modifier, appIcon: Bitmap, appName: String) {
-    var check by remember { mutableStateOf(false) }
+fun AppsItem(
+    modifier: Modifier = Modifier,
+    appIcon: Bitmap?,
+    appName: String,
+    checkValue: Boolean,
+    onCheckChanged: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -288,11 +305,11 @@ fun AppsItem(modifier: Modifier = Modifier, appIcon: Bitmap, appName: String) {
 
         Switch(
             modifier = Modifier.scale(0.8f),
-            checked = check, onCheckedChange = { check = !check },
+            checked = checkValue, onCheckedChange = { onCheckChanged(it) },
             thumbContent =
                 {
                     Icon(
-                        imageVector = if (check) Icons.Filled.Check else Icons.Filled.Close,
+                        imageVector = if (checkValue) Icons.Filled.Check else Icons.Filled.Close,
                         contentDescription = null,
                         modifier = Modifier.size(SwitchDefaults.IconSize),
                     )

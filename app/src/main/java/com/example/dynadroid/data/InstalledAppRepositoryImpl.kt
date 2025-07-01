@@ -1,6 +1,5 @@
 package com.example.dynadroid.data
 
-import androidx.core.graphics.drawable.toBitmap
 import com.example.dynadroid.data.local.dao.InstalledAppsDao
 import com.example.dynadroid.data.local.entity.SelectedAppInfo
 import com.example.dynadroid.data.model.AppInfo
@@ -8,19 +7,21 @@ import com.example.dynadroid.domain.InstalledAppsRepository
 import com.example.dynadroid.domain.InstalledDeviceApps
 import com.example.dynadroid.utils.AppLoadResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlin.time.Duration.Companion.milliseconds
 
 class InstalledAppRepositoryImpl(
     private val installedAppsDao: InstalledAppsDao,
     private val installedDeviceApps: InstalledDeviceApps
 ) : InstalledAppsRepository {
-    override suspend fun updateCheckedState(packageName: String, isChecked: Boolean) {
-        //TODO Not yet implemented
+    override suspend fun updateApps(packages: List<SelectedAppInfo>) {
+        installedAppsDao.updateApps(packages)
     }
 
     private suspend fun syncWithDeviceApps(
@@ -36,19 +37,22 @@ class InstalledAppRepositoryImpl(
         val newApps = installedApps.asSequence()
             .filter { it.packageName !in dbPackages }
             .map {
-                SelectedAppInfo(
-                    appName = it.appName,
-                    appIcon = it.appIcon,
-                    packageName = it.packageName,
-                    isChecked = false,
-                )
+                it.appIcon?.let { packageName ->
+                    SelectedAppInfo(
+                        appName = it.appName,
+                        appIcon = packageName,
+                        packageName = it.packageName,
+                        isChecked = false,
+                    )
+                }
             }.toList()
         emit(0.90f)
 
         val uninstalledPackages = dbPackages - installedPackages
         emit(0.95f)
-        installedAppsDao.syncApps(newApps, uninstalledPackages.toList())
-        emit(0.1f)
+        installedAppsDao.syncApps(newApps.filterNotNull(), uninstalledPackages.toList())
+        delay(200.milliseconds)
+        emit(1.0f)
     }
 
     override suspend fun getSyncedApps(): Flow<AppLoadResult<List<SelectedAppInfo>>> = flow {
