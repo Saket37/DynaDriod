@@ -41,13 +41,17 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,6 +59,7 @@ import coil.compose.AsyncImage
 import com.example.dynadroid.R
 import com.example.dynadroid.system_design.GradientBackground
 import com.example.dynadroid.system_design.cardShape
+import com.example.dynadroid.ui.components.ScrollToTop
 import com.example.dynadroid.ui.theme.CardBackground
 import com.example.dynadroid.ui.theme.MidGrayBackground
 import com.example.dynadroid.ui.theme.NotoSans400Fs16
@@ -66,6 +71,7 @@ import com.example.dynadroid.ui.theme.SpaceGrotesk700Fs22
 import com.example.dynadroid.ui.theme.TextColorDark
 import com.example.dynadroid.ui.theme.White
 import com.example.dynadroid.utils.VerticalGap
+import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -95,6 +101,8 @@ fun AppSelectionScreenRoot(
     }
 }
 
+private val JumpToTopThreshold = 56.dp
+
 @Composable
 fun AppSelectionScreen(
     modifier: Modifier = Modifier,
@@ -105,11 +113,22 @@ fun AppSelectionScreen(
     onCheckChanged: (String, Boolean) -> Unit,
     onSelectAppClick: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
+
     val animatedProgress by
     animateFloatAsState(
         targetValue = uiState.loadingProgress,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
     )
+    val scrollThreshold = with(LocalDensity.current) {
+        JumpToTopThreshold.toPx()
+    }
+    val scrollToTopButtonEnabled by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex != 0 ||
+                    listState.firstVisibleItemScrollOffset > scrollThreshold
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -274,6 +293,12 @@ fun AppSelectionScreen(
 
             }
 
+
+            ScrollToTop(scrollToTopButtonEnabled, onClicked = {
+                scope.launch {
+                    listState.animateScrollToItem(0)
+                }
+            }, modifier = Modifier.align(Alignment.BottomCenter))
         }
     }
 }
