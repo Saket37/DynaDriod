@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.dynadroid.ui.on_boarding.Welcome
+import com.example.dynadroid.ui.on_boarding.permissions.AskPermissionsScreenRoot
 import com.example.dynadroid.ui.on_boarding.select_apps.AppSelectionScreenRoot
 
 @Composable
@@ -34,7 +35,18 @@ private fun NavGraphBuilder.appNav(
             )
         }
         composable(route = "appSelectionOnboarding") {
-            AppSelectionScreenRoot(onNextClick = {}, onSkipClick = {})
+            AppSelectionScreenRoot(onNextClick = {
+                navController.navigate("askPermissionScreen") {
+                    popUpTo("appSelectionOnboarding") {
+                        inclusive = true
+                    }
+                }
+            }, onSkipClick = {
+                navController.navigate("askPermissionScreen")
+            })
+        }
+        composable(route = "askPermissionScreen") {
+            AskPermissionsScreenRoot()
         }
     }
 }

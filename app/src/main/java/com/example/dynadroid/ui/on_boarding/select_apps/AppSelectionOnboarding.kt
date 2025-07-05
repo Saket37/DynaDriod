@@ -16,14 +16,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -59,6 +54,7 @@ import coil.compose.AsyncImage
 import com.example.dynadroid.R
 import com.example.dynadroid.system_design.GradientBackground
 import com.example.dynadroid.system_design.cardShape
+import com.example.dynadroid.ui.components.DynaDroidAppBar
 import com.example.dynadroid.ui.components.ScrollToTop
 import com.example.dynadroid.ui.theme.CardBackground
 import com.example.dynadroid.ui.theme.MidGrayBackground
@@ -129,35 +125,7 @@ fun AppSelectionScreen(
                     listState.firstVisibleItemScrollOffset > scrollThreshold
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .windowInsetsPadding(WindowInsets.navigationBars)
-    ) {
-        VerticalGap(12.dp)
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                modifier = Modifier
-                    .clickable { onSkipClick() }
-                    .weight(1f),
-                text = stringResource(R.string.skip),
-                style = NotoSans400Fs16,
-                color = Color.White
-            )
-            Text(
-                modifier = Modifier.clickable { onNextClick() },
-                text = stringResource(R.string.next),
-                style = NotoSans400Fs16,
-                color = Color.White
-            )
-        }
-
-        VerticalGap(12.dp)
+    DynaDroidAppBar(leftBtnClick = { onSkipClick() }, rightBtnClick = { onNextClick() }) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
